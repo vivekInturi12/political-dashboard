@@ -1,0 +1,587 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f0f4f8;--bg2:#ffffff;--bg3:#e8edf2;--bg4:#dde3ea;
+  --bdr:#d0d7de;--bdr2:#b0bcc8;
+  --txt:#1a2332;--txt2:#4a5568;--txt3:#8a9bb0;
+  --cyan:#0891b2;--cyan-lt:#e0f2fe;
+  --navy:#1e3a5f;
+  --ycp:#1d4ed8;--ycp-lt:#eff6ff;--ycp-bdr:#bfdbfe;
+  --tdp:#b45309;--tdp-lt:#fffbeb;--tdp-bdr:#fde68a;
+  --js:#c2410c;--js-lt:#fff7ed;--js-bdr:#fed7aa;
+  --green:#15803d;--green-lt:#f0fdf4;
+  --red:#dc2626;--red-lt:#fef2f2;
+  --amber:#d97706;--amber-lt:#fffbeb;
+  --purple:#7c3aed;--purple-lt:#f5f3ff;
+}
+body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif;font-size:13px}
+
+/* TOPBAR */
+.topbar{background:var(--navy);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-badge{background:rgba(255,255,255,.15);color:#67e8f9;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;border:1px solid rgba(103,232,249,.4)}
+.brand-title{color:#fff;font-size:16px;font-weight:700}
+.live-badge{display:flex;align-items:center;gap:5px;font-size:11px;color:#6ee7b7;font-weight:600}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#6ee7b7;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* FILTERS */
+.filterbar{background:var(--bg2);border-bottom:1px solid var(--bdr);padding:10px 16px;display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.fgroup{display:flex;flex-direction:column;gap:4px;flex:1;min-width:110px}
+.fgroup label{font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.fgroup select{background:var(--bg2);color:var(--txt);border:1.5px solid var(--bdr);border-radius:8px;padding:7px 10px;font-size:12px;cursor:pointer;outline:none;width:100%;font-weight:500}
+.fgroup select:focus{border-color:var(--cyan)}
+
+/* PARTY SWITCHER */
+.party-switcher{background:var(--bg2);border-bottom:1px solid var(--bdr);padding:0 16px;display:flex;align-items:center}
+.party-btn{padding:10px 16px;font-size:12px;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;color:var(--txt2);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.party-btn:hover{background:var(--bg3)}
+.party-btn.ycp.active{color:var(--ycp);border-bottom-color:var(--ycp);background:var(--ycp-lt)}
+.party-btn.tdp.active{color:#92400e;border-bottom-color:#f59e0b;background:var(--tdp-lt)}
+.party-btn.js.active{color:var(--js);border-bottom-color:#f97316;background:var(--js-lt)}
+.party-btn.all.active{color:var(--cyan);border-bottom-color:var(--cyan);background:var(--cyan-lt)}
+.pdot{width:9px;height:9px;border-radius:50%}
+.pdot.ycp{background:var(--ycp)}
+.pdot.tdp{background:#f59e0b}
+.pdot.js{background:#f97316}
+.pdot.all{background:var(--cyan)}
+
+/* NAV TABS */
+.nav-bar{background:var(--bg2);border-bottom:1px solid var(--bdr);padding:10px 16px;display:flex;gap:8px;flex-wrap:wrap}
+.nav-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;border:1.5px solid var(--bdr);background:var(--bg2);color:var(--txt2);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s}
+.nav-btn:hover{background:var(--bg3)}
+.nav-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+.breadcrumb{padding:7px 16px;font-size:11px;color:var(--txt3);background:var(--bg2);border-bottom:1px solid var(--bdr)}
+.breadcrumb b{color:var(--cyan)}
+
+.main{padding:14px 16px}
+
+/* SECTION HEADERS */
+.sec-hdr{display:flex;align-items:center;gap:8px;margin:20px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--bdr)}
+.sec-hdr-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.sec-hdr h2{font-size:13px;font-weight:700;color:var(--txt);text-transform:uppercase;letter-spacing:.06em}
+.sec-hdr span{font-size:11px;color:var(--txt3);margin-left:4px}
+
+/* KPI CARDS */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:14px}
+.kpi{background:var(--bg2);border:1.5px solid var(--bdr);border-radius:10px;padding:11px 13px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kpi.c-cyan::before{background:var(--cyan)}
+.kpi.c-green::before{background:var(--green)}
+.kpi.c-amber::before{background:var(--amber)}
+.kpi.c-red::before{background:var(--red)}
+.kpi.c-purple::before{background:var(--purple)}
+.kpi.c-navy::before{background:var(--navy)}
+.kpi.c-ycp::before{background:var(--ycp)}
+.kpi.c-tdp::before{background:#f59e0b}
+.kpi.c-js::before{background:#f97316}
+.kpi .lbl{font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;font-weight:600}
+.kpi .val{font-size:19px;font-weight:700;color:var(--txt);line-height:1.1}
+.kpi .sub{font-size:11px;color:var(--txt3);margin-top:3px}
+.delta{font-size:10px;padding:1px 6px;border-radius:4px;font-weight:600;display:inline-block;margin-top:3px}
+.up{background:#dcfce7;color:var(--green)}
+.dn{background:#fee2e2;color:var(--red)}
+
+/* GRID LAYOUTS */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:12px}
+.full{grid-column:1/-1}
+.span2{grid-column:span 2}
+
+/* CARDS */
+.card{background:var(--bg2);border:1.5px solid var(--bdr);border-radius:10px;padding:14px}
+.card.accent-l{border-left:3px solid var(--cyan)}
+.card.accent-g{border-left:3px solid var(--green)}
+.card.accent-a{border-left:3px solid var(--amber)}
+.card.accent-r{border-left:3px solid var(--red)}
+.card.accent-p{border-left:3px solid var(--purple)}
+.card h3{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--txt2);margin-bottom:12px;display:flex;align-items:center;gap:6px;font-weight:700}
+
+/* MLA CARD */
+.mla-wrap{display:flex;gap:14px;align-items:flex-start}
+.mla-av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0;background:var(--navy);color:#fff}
+.mla-name{font-size:16px;font-weight:700;color:var(--txt);margin-bottom:3px}
+.mla-sub{font-size:11px;color:var(--txt2);margin-bottom:5px}
+.pill{display:inline-block;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:700;margin-right:3px}
+.p-ycp{background:var(--ycp-lt);color:var(--ycp);border:1px solid var(--ycp-bdr)}
+.p-tdp{background:var(--tdp-lt);color:#92400e;border:1px solid var(--tdp-bdr)}
+.p-js{background:var(--js-lt);color:var(--js);border:1px solid var(--js-bdr)}
+.p-inc{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
+.p-win{background:#f0fdf4;color:var(--green);border:1px solid #bbf7d0}
+
+/* PROGRESS BARS */
+.pbar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.pbar-lbl{font-size:11px;color:var(--txt2);width:80px;flex-shrink:0;font-weight:500}
+.pbar-track{flex:1;height:7px;background:var(--bg3);border-radius:4px;overflow:hidden;border:1px solid var(--bdr)}
+.pbar-fill{height:100%;border-radius:4px}
+.pbar-val{font-size:11px;font-weight:700;width:36px;text-align:right;color:var(--txt)}
+
+/* WORKER CARDS */
+.wcard{background:var(--bg3);border-radius:8px;padding:8px 10px;margin-bottom:7px;display:flex;align-items:center;gap:9px;border:1px solid var(--bdr)}
+.wav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.wav-n{background:var(--navy);color:#fff}
+.wav-y{background:var(--ycp-lt);color:var(--ycp);border:1px solid var(--ycp-bdr)}
+.wav-t{background:var(--tdp-lt);color:#92400e;border:1px solid var(--tdp-bdr)}
+.wav-j{background:var(--js-lt);color:var(--js);border:1px solid var(--js-bdr)}
+.wbadge{font-size:9px;padding:1px 6px;border-radius:4px;font-weight:700}
+.wb1{background:#dbeafe;color:#1d4ed8}
+.wb2{background:#dcfce7;color:#15803d}
+.wb3{background:#fef9c3;color:#a16207}
+
+/* ISSUES */
+.issue-item{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--bdr)}
+.issue-item:last-child{border-bottom:none}
+.iico{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.ir{background:#fee2e2;color:var(--red)}
+.ia{background:#fef9c3;color:var(--amber)}
+.ig{background:#dcfce7;color:var(--green)}
+.issue-t{font-size:12px;font-weight:600;color:var(--txt);margin-bottom:1px}
+.issue-d{font-size:11px;color:var(--txt2)}
+
+/* DEV ITEMS */
+.dev-item{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--bdr);align-items:flex-start}
+.dev-item:last-child{border-bottom:none}
+.dev-yr{font-size:10px;background:var(--cyan-lt);border:1px solid #a5f3fc;padding:2px 6px;border-radius:4px;color:var(--cyan);white-space:nowrap;flex-shrink:0;font-weight:700}
+.dev-t{font-size:12px;color:var(--txt2);line-height:1.5}
+
+/* ELECT ROWS */
+.erow{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--bdr);font-size:12px;gap:6px;flex-wrap:wrap}
+.erow:last-child{border-bottom:none}
+
+/* CASTE GRID */
+.caste-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.caste-item{background:var(--bg3);border-radius:6px;padding:7px 10px;display:flex;justify-content:space-between;font-size:12px;border:1px solid var(--bdr)}
+.cp{font-weight:700;color:var(--cyan)}
+
+.chart-wrap{position:relative;width:100%}
+
+/* COMPARE CELLS */
+.cmp3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
+.cc{background:var(--bg3);border-radius:8px;padding:10px;text-align:center;border:1px solid var(--bdr)}
+.cc .cl{font-size:10px;color:var(--txt3);text-transform:uppercase;font-weight:600;margin-bottom:5px}
+.cc .cv{font-size:18px;font-weight:700}
+.cc .cs{font-size:11px;color:var(--txt3);margin-top:2px}
+</style>
+
+<div>
+  <div class="topbar">
+    <div class="brand">
+      <span class="brand-badge">IN AP</span>
+      <span class="brand-title">Nenu Unnanu Nenu Vinnanu</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px">
+      <div class="live-badge"><div class="live-dot"></div> LIVE DATA</div>
+      <span style="font-size:11px;color:rgba(255,255,255,.5)">Last updated: May 2026</span>
+    </div>
+  </div>
+
+  <div class="filterbar">
+    <div class="fgroup"><label>District</label>
+      <select id="distSel" onchange="onDist()">
+        <option value="guntur">Guntur</option>
+        <option value="bapatla">Bapatla</option>
+      </select>
+    </div>
+    <div class="fgroup"><label>Constituency</label>
+      <select id="constSel" onchange="onConst()"></select>
+    </div>
+    <div class="fgroup"><label>Mandal</label>
+      <select id="mandalSel" onchange="onMandal()"><option value="">All Mandals</option></select>
+    </div>
+    <div class="fgroup"><label>Village / Ward</label>
+      <select id="villageSel" onchange="render()"><option value="">All Villages</option></select>
+    </div>
+  </div>
+
+  <div class="party-switcher">
+    <div class="party-btn ycp active" onclick="switchParty('ycp',this)"><span class="pdot ycp"></span> YSRCP</div>
+    <div class="party-btn tdp" onclick="switchParty('tdp',this)"><span class="pdot tdp"></span> TDP</div>
+    <div class="party-btn js" onclick="switchParty('js',this)"><span class="pdot js"></span> Jana Sena</div>
+    <div class="party-btn all" onclick="switchParty('all',this)">⇄ Compare All</div>
+  </div>
+
+  <div class="nav-bar">
+    <button class="nav-btn active" onclick="showTab('overview',this)">⊞ Overview</button>
+    <button class="nav-btn" onclick="showTab('workers',this)">👥 Workers</button>
+    <button class="nav-btn" onclick="showTab('election',this)">📊 Elections</button>
+    <button class="nav-btn" onclick="showTab('demo',this)">🏘 Demographics</button>
+    <button class="nav-btn" onclick="showTab('economy',this)">🏭 Economy</button>
+    <button class="nav-btn" onclick="showTab('issues',this)">⚠ Key Issues</button>
+    <button class="nav-btn" onclick="showTab('dev',this)">🚀 Development</button>
+  </div>
+
+  <div class="breadcrumb">Andhra Pradesh / <b id="bcD">Guntur</b> / <b id="bcC">Mangalagiri</b> Constituency</div>
+
+  <div class="main">
+    <div id="tab-overview"><div id="ovContent"></div></div>
+    <div id="tab-workers" style="display:none"><div id="wkContent"></div></div>
+    <div id="tab-election" style="display:none"><div id="elContent"></div></div>
+    <div id="tab-demo" style="display:none"><div id="dmContent"></div></div>
+    <div id="tab-economy" style="display:none"><div id="ecContent"></div></div>
+    <div id="tab-issues" style="display:none"><div id="isContent"></div></div>
+    <div id="tab-dev" style="display:none"><div id="dvContent"></div></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+let CP="ycp", CHTS={};
+function dkAll(){Object.values(CHTS).forEach(c=>{try{c.destroy()}catch(e){}});CHTS={}}
+function dk(id){if(CHTS[id]){try{CHTS[id].destroy()}catch(e){} delete CHTS[id]}}
+const PC={ycp:"#1d4ed8",tdp:"#f59e0b",js:"#f97316",all:"#0891b2"};
+const PNAME={ycp:"YSRCP",tdp:"TDP",js:"Jana Sena",all:"All Parties"};
+
+const DB={
+  mangalagiri:{
+    name:"Mangalagiri",no:87,dist:"Guntur",
+    mandals:["Mangalagiri","Tadepalle","Thulluru"],
+    villages:{Mangalagiri:["Mangalagiri Town","Venkatapalem","Undavalli"],Tadepalle:["Tadepalle","Krishnayapalem","Nidamanuru"],Thulluru:["Thulluru","Lingayapalem","Velagapudi"]},
+    demo:{pop:"3.2L",electors:"2.80L",female:"1.38L",male:"1.31L",u18:"~70K",lit:79,urban:72,rural:28,gm:130634,gf:137898,age:[22,30,25,15,8],elG:[201229,232396,268558,280000],occup:["Agriculture","Business","Govt.","Private","Labour","Others"],occupD:[12,28,15,25,14,6],sectors:["Agriculture","Trade","Services","Industry","Others"],sectorD:[12,28,30,20,10]},
+    caste:[{n:"Kamma",p:22},{n:"BC / OBC",p:28},{n:"SC",p:18},{n:"Reddy",p:12},{n:"Kapu",p:10},{n:"Others",p:10}],
+    biz:"Mangalagiri is AP's premier handloom hub — famous for Mangalagiri sarees and cotton fabrics. Proximity to Amaravati capital region drives real estate and services growth.",
+    elections:[{yr:2009,w:"Kamala Kandru",p:"INC",pc:"p-inc",votes:"52,585",pct:32.5,margin:"12,762",turn:76.74},{yr:2014,w:"Alla RK Reddy",p:"YSRCP",pc:"p-ycp",votes:"88,977",pct:44.73,margin:"12",turn:80.03},{yr:2019,w:"Alla RK Reddy",p:"YSRCP",pc:"p-ycp",votes:"1,08,464",pct:47.47,margin:"5,337",turn:85.48},{yr:2024,w:"Nara Lokesh",p:"TDP",pc:"p-tdp",votes:"1,67,710",pct:66.07,margin:"91,413",turn:85.74}],
+    dev:[{yr:"2024",t:"Amaravati Phase-1 construction restarted"},{yr:"2023",t:"Mangalagiri–Guntur 4-lane road widening completed"},{yr:"2022",t:"Handloom cluster upgraded under DPIIT scheme"},{yr:"2021",t:"220KV sub-station commissioned"},{yr:"2020",t:"COVID relief — free ration to 42,000 households"}],
+    up:["Amaravati capital construction — HC & Secretariat","Mangalagiri ring road bypass","New government medical college","Textile park expansion under SAMARTH"],
+    pd:{
+      ycp:{nm:"YSRCP",sc:"ycp",mla:"Alla RK Reddy",mla_term:"2014–2024",booths:278,members:12400,active:8200,v14:44.73,v19:47.47,v24:30.06,best:"2019 — 47.47%",w24votes:"76,297",strength:"Strong OBC/BC base, welfare beneficiaries, Amaravati farmer connect",weakness:"Anti-incumbency 2024, Amaravati capital controversy",issues:[{ico:"🏛",cl:"ir",t:"Amaravati capital status",d:"Wants 3-capital model; opposes single capital plan"},{ico:"❤️",cl:"ia",t:"Welfare scheme continuity",d:"Amma Vodi, Rythu Bharosa discontinuation — top voter concern"},{ico:"👥",cl:"ia",t:"Voter base erosion",d:"Urban & Kamma votes shifted heavily to TDP in 2024"}],mw:[{n:"Siva Prasad Reddy",m:"Mangalagiri",r:"Mandal President",mem:"2,800",mo:"9848-001-100"},{n:"Padma Latha",m:"Tadepalle",r:"Mandal President",mem:"2,100",mo:"9848-001-101"},{n:"Ranga Rao",m:"Thulluru",r:"Mandal President",mem:"1,900",mo:"9848-001-102"}],vw:[{n:"Srinu Kumar",v:"Mangalagiri Town",r:"Village President",b:"12 booths"},{n:"Annapurna Devi",v:"Venkatapalem",r:"Booth Agent",b:"6 booths"},{n:"Venkat Rao",v:"Undavalli",r:"Village Convenor",b:"8 booths"},{n:"Lakshmi Prasad",v:"Tadepalle",r:"Village President",b:"10 booths"},{n:"Chandra Sekhar",v:"Thulluru",r:"Village President",b:"9 booths"}],wd:[2800,2100,1900]},
+      tdp:{nm:"TDP",sc:"tdp",mla:"Nara Lokesh",mla_term:"2024–present",booths:278,members:14200,active:10800,v14:44.72,v19:45.14,v24:66.07,best:"2024 — 66.07%",w24votes:"1,67,710",strength:"Kamma, urban educated, business community, Yuvagalam youth effect",weakness:"Thin rural penetration in Thulluru mandal",issues:[{ico:"🏛",cl:"ia",t:"Amaravati delivery speed",d:"Voters expect faster capital city construction"},{ico:"🛣️",cl:"ia",t:"Layout roads in new zones",d:"Rapid urbanisation creating infrastructure demand"},{ico:"⚡",cl:"ig",t:"Power to weaving cluster",d:"Voltage issues in textile cluster need permanent fix"}],mw:[{n:"Narasimha Rao",m:"Mangalagiri",r:"Mandal President",mem:"3,800",mo:"9848-002-100"},{n:"Vijaya Lakshmi",m:"Tadepalle",r:"Mandal President",mem:"3,100",mo:"9848-002-101"},{n:"Suresh Babu",m:"Thulluru",r:"Mandal President",mem:"2,400",mo:"9848-002-102"}],vw:[{n:"Kiran Kumar",v:"Mangalagiri Town",r:"Village President",b:"12 booths"},{n:"Mani Devi",v:"Venkatapalem",r:"Booth Agent",b:"6 booths"},{n:"Pavan Kumar",v:"Undavalli",r:"Village Convenor",b:"8 booths"},{n:"Sudha Rani",v:"Tadepalle",r:"Village President",b:"10 booths"},{n:"Bhaskar Rao",v:"Thulluru",r:"Village President",b:"9 booths"}],wd:[3800,3100,2400]},
+      js:{nm:"Jana Sena",sc:"js",mla:"Alliance partner (NDA)",mla_term:"2024–present",booths:278,members:4800,active:3200,v14:0,v19:0,v24:0,best:"2024 NDA alliance",w24votes:"Alliance",strength:"Youth connect, Pawan Kalyan brand, Kapu community",weakness:"Small standalone base; mostly TDP alliance votes",issues:[{ico:"👥",cl:"ia",t:"Kapu community welfare",d:"KRRP reservation pending legislative action"},{ico:"🎓",cl:"ia",t:"Youth employment",d:"Skill development and MSME jobs for youth"},{ico:"🤝",cl:"ig",t:"Alliance coordination",d:"Booth-level TDP coordination critical for 2029"}],mw:[{n:"Chandra Mohan",m:"Mangalagiri",r:"Mandal Convenor",mem:"1,400",mo:"9848-003-100"},{n:"Soujanya",m:"Tadepalle",r:"Mandal Convenor",mem:"980",mo:"9848-003-101"},{n:"Kishore Kumar",m:"Thulluru",r:"Mandal Convenor",mem:"720",mo:"9848-003-102"}],vw:[{n:"Durga Rao",v:"Mangalagiri Town",r:"Village Convenor",b:"12 booths"},{n:"Kavitha",v:"Tadepalle",r:"Booth Coordinator",b:"10 booths"},{n:"Sai Kiran",v:"Thulluru",r:"Village Convenor",b:"9 booths"}],wd:[1400,980,720]},
+    }
+  },
+  bapatla:{
+    name:"Bapatla",no:92,dist:"Bapatla",
+    mandals:["Bapatla","Repalle","Karlapalem"],
+    villages:{Bapatla:["Bapatla Town","Inkollu","Vetapalem"],Repalle:["Repalle","Nizampatnam","Chirala"],Karlapalem:["Karlapalem","Ethamukkala","Cherukupalli"]},
+    demo:{pop:"2.8L",electors:"1.85L",female:"94K",male:"91K",u18:"~67K",lit:72,urban:40,rural:60,gm:91063,gf:94005,age:[24,28,26,15,7],elG:[161981,171229,185076,185068],occup:["Agriculture","Fishing","Business","Govt.","Labour","Others"],occupD:[32,15,18,12,16,7],sectors:["Agriculture","Fishing","Trade","Services","Others"],sectorD:[32,15,18,25,10]},
+    caste:[{n:"Kamma",p:18},{n:"BC / OBC",p:30},{n:"SC",p:18},{n:"Kapu",p:14},{n:"Fishermen",p:8},{n:"Others",p:12}],
+    biz:"Bapatla economy: coastal agriculture (paddy, tobacco), sea fishing, and SKUAST University-driven services. Fish export co-ops are growing.",
+    elections:[{yr:2009,w:"Gade Venkata Reddy",p:"INC",pc:"p-inc",votes:"37,456",pct:30.51,margin:"1,363",turn:73.85},{yr:2014,w:"Kona Raghupathi",p:"YSRCP",pc:"p-ycp",votes:"71,076",pct:50.12,margin:"5,813",turn:75.17},{yr:2019,w:"Kona Raghupathi",p:"YSRCP",pc:"p-ycp",votes:"79,836",pct:51.92,margin:"15,199",turn:83.71},{yr:2024,w:"Vegesana NV Raju",p:"TDP",pc:"p-tdp",votes:"90,626",pct:56.21,margin:"27,768",turn:83.02}],
+    dev:[{yr:"2024",t:"Bapatla district HQ upgraded — new collectorate complex"},{yr:"2023",t:"Sea wall reinforcement in 3 coastal villages (₹40 Cr)"},{yr:"2022",t:"SKUAST University expansion"},{yr:"2021",t:"PMMSY — 1,200 fishermen covered"},{yr:"2020",t:"COVID relief — free ration to 38,000 households"}],
+    up:["Deep-sea fishing harbour upgrade","Coastal highway to Ongole NH","Cold storage chain for fish export","Solar drinking water for coastal villages"],
+    pd:{
+      ycp:{nm:"YSRCP",sc:"ycp",mla:"Kona Raghupathi",mla_term:"2014–2024",booths:202,members:8900,active:5800,v14:50.12,v19:51.92,v24:38.99,best:"2019 — 51.92%",w24votes:"62,858",strength:"BC/OBC fisher community, paddy farmers, welfare beneficiaries",weakness:"Coastal anti-incumbency, fish welfare scheme gaps",issues:[{ico:"🐟",cl:"ir",t:"Fishermen welfare",d:"Cold storage & boat insurance gaps remain critical"},{ico:"🌊",cl:"ia",t:"Coastal erosion",d:"Sea wall works claim stalled"},{ico:"❤️",cl:"ia",t:"Welfare scheme revival",d:"Rythu Bharosa & Amma Vodi top demand"}],mw:[{n:"Suresh Fisher",m:"Bapatla",r:"Mandal President",mem:"2,200",mo:"9848-011-100"},{n:"Padmavathi",m:"Repalle",r:"Mandal President",mem:"1,800",mo:"9848-011-101"},{n:"Venkanna",m:"Karlapalem",r:"Mandal President",mem:"1,400",mo:"9848-011-102"}],vw:[{n:"Ramaiah",v:"Bapatla Town",r:"Village President",b:"10 booths"},{n:"Sarada Devi",v:"Inkollu",r:"Booth Agent",b:"7 booths"},{n:"Kotaiah",v:"Vetapalem",r:"Village Convenor",b:"8 booths"}],wd:[2200,1800,1400]},
+      tdp:{nm:"TDP",sc:"tdp",mla:"Vegesana NV Raju",mla_term:"2024–present",booths:202,members:9800,active:7200,v14:46.02,v19:42.04,v24:56.21,best:"2024 — 56.21%",w24votes:"90,626",strength:"Kamma, Kapu, business class, SKUAST influence",weakness:"Smaller fisher community representation",issues:[{ico:"🛣️",cl:"ia",t:"Coastal highway connectivity",d:"Bapatla–Ongole NH link needs acceleration"},{ico:"💧",cl:"ia",t:"Groundwater salinity",d:"Solar drinking water scheme pending"},{ico:"🎓",cl:"ig",t:"Higher education expansion",d:"New engineering seats for rural youth"}],mw:[{n:"Nageswara Rao",m:"Bapatla",r:"Mandal President",mem:"2,800",mo:"9848-012-100"},{n:"Seetha Devi",m:"Repalle",r:"Mandal President",mem:"2,100",mo:"9848-012-101"},{n:"Krishna Murthy",m:"Karlapalem",r:"Mandal President",mem:"1,600",mo:"9848-012-102"}],vw:[{n:"Srinu Rao",v:"Bapatla Town",r:"Village President",b:"10 booths"},{n:"Anitha",v:"Inkollu",r:"Booth Agent",b:"7 booths"},{n:"Bala Reddy",v:"Vetapalem",r:"Village Convenor",b:"8 booths"}],wd:[2800,2100,1600]},
+      js:{nm:"Jana Sena",sc:"js",mla:"Alliance partner",mla_term:"2024–present",booths:202,members:2800,active:1800,v14:0,v19:0,v24:0,best:"2024 alliance",w24votes:"Alliance",strength:"Kapu community, Pawan Kalyan appeal",weakness:"Very thin coastal grassroots",issues:[{ico:"👥",cl:"ia",t:"Kapu reservation",d:"KRRP awaiting legislative action"},{ico:"🐟",cl:"ig",t:"Fisher community connect",d:"Need stronger coastal village presence"}],mw:[{n:"Hari Babu",m:"Bapatla",r:"Mandal Convenor",mem:"800",mo:"9848-013-100"},{n:"Meena Kumari",m:"Repalle",r:"Mandal Convenor",mem:"600",mo:"9848-013-101"},{n:"Govind Rao",m:"Karlapalem",r:"Mandal Convenor",mem:"480",mo:"9848-013-102"}],vw:[{n:"Raju Fisher",v:"Bapatla Town",r:"Village Convenor",b:"10 booths"},{n:"Tulasi",v:"Repalle",r:"Booth Coordinator",b:"7 booths"}],wd:[800,600,480]},
+    }
+  },
+  chirala:{
+    name:"Chirala",no:94,dist:"Bapatla",
+    mandals:["Chirala","Vetapalem","Inkollu"],
+    villages:{Chirala:["Chirala Town","Santhanuthalapadu","Korisapadu"],Vetapalem:["Vetapalem","Yarlagadda","Parchur"],Inkollu:["Inkollu","Kothapatnam","Pamur"]},
+    demo:{pop:"3.5L",electors:"2.10L",female:"1.08L",male:"1.05L",u18:"~80K",lit:75,urban:55,rural:45,gm:105000,gf:108000,age:[23,29,26,14,8],elG:[175000,190000,205000,210000],occup:["Agriculture","Textile","Business","Govt.","Labour","Others"],occupD:[20,22,20,13,18,7],sectors:["Agriculture","Textiles","Trade","Services","Fishing"],sectorD:[20,22,20,25,13]},
+    caste:[{n:"Kamma",p:20},{n:"BC / OBC",p:25},{n:"SC",p:16},{n:"Kapu",p:16},{n:"Balija",p:10},{n:"Others",p:13}],
+    biz:"Chirala — 'Manchester of Andhra'. Cotton fabric and shirting exported globally. Powerloom cluster employs 60,000+. Also known for tobacco trade, fish market and growing pharma.",
+    elections:[{yr:2009,w:"Amanchi Krishna Mohan",p:"INC",pc:"p-inc",votes:"48,500",pct:33.2,margin:"8,200",turn:75.3},{yr:2014,w:"Amanchi Krishna Mohan",p:"TDP",pc:"p-tdp",votes:"78,000",pct:48.1,margin:"14,200",turn:77.5},{yr:2019,w:"Karanam Dharmasri",p:"YSRCP",pc:"p-ycp",votes:"92,000",pct:50.6,margin:"11,400",turn:82.0},{yr:2024,w:"Amanchi Krishna Mohan",p:"TDP",pc:"p-tdp",votes:"96,000",pct:54.3,margin:"32,401",turn:81.5}],
+    dev:[{yr:"2024",t:"Chirala textile park Phase-2 MOU signed with NITI Aayog"},{yr:"2023",t:"NH-16 Chirala bypass alignment finalised"},{yr:"2022",t:"APSSDC skilling centre — 2,000 youth trained"},{yr:"2021",t:"Sea wall extended — 1.8 km coastal protection"},{yr:"2020",t:"Powerloom cluster — ₹55 Cr MSME revival package"}],
+    up:["Textile export zone designation","NH bypass road Phase 1 by 2026","24×7 industrial power rationalisation","Fishermen harbour redevelopment"],
+    pd:{
+      ycp:{nm:"YSRCP",sc:"ycp",mla:"Karanam Dharmasri",mla_term:"2019–2024",booths:235,members:10200,active:7100,v14:45.5,v19:50.6,v24:34.2,best:"2019 — 50.6%",w24votes:"71,000",strength:"Textile worker base, daily labour, BC/SC vote bank",weakness:"Power tariff hike blamed on YSRCP hurt core voters",issues:[{ico:"👕",cl:"ir",t:"Powerloom workers welfare",d:"Promises to reinstate low power tariff for weavers"},{ico:"💧",cl:"ia",t:"Industrial water supply",d:"Textile dyeing unit water shortage"},{ico:"🌊",cl:"ir",t:"Sea erosion relief",d:"Coastal protection works incomplete"}],mw:[{n:"Dharma Rao",m:"Chirala",r:"Mandal President",mem:"3,200",mo:"9848-021-100"},{n:"Kamala Devi",m:"Vetapalem",r:"Mandal President",mem:"2,400",mo:"9848-021-101"},{n:"Anand Kumar",m:"Inkollu",r:"Mandal President",mem:"1,800",mo:"9848-021-102"}],vw:[{n:"Weaver Raju",v:"Chirala Town",r:"Village President",b:"14 booths"},{n:"Savitha",v:"Santhanuthalapadu",r:"Booth Agent",b:"8 booths"},{n:"Bhaskar",v:"Vetapalem",r:"Village Convenor",b:"9 booths"},{n:"Laxmi Bai",v:"Inkollu",r:"Village President",b:"10 booths"}],wd:[3200,2400,1800]},
+      tdp:{nm:"TDP",sc:"tdp",mla:"Amanchi Krishna Mohan",mla_term:"2024–present",booths:235,members:11400,active:8600,v14:48.1,v19:42.3,v24:54.3,best:"2024 — 54.3%",w24votes:"96,000",strength:"Business class, Kamma, Kapu, anti-YSRCP weavers",weakness:"Power tariff issue could return if unresolved",issues:[{ico:"👕",cl:"ia",t:"Textile export zone",d:"Voters expect cluster export zone soon"},{ico:"🛣️",cl:"ia",t:"NH-16 bypass delay",d:"Land acquisition must complete 2026"},{ico:"⚡",cl:"ig",t:"24×7 power for weavers",d:"Monitoring power tariff rationalisation"}],mw:[{n:"Venkat Reddy",m:"Chirala",r:"Mandal President",mem:"3,800",mo:"9848-022-100"},{n:"Sunitha Rao",m:"Vetapalem",r:"Mandal President",mem:"2,800",mo:"9848-022-101"},{n:"Babu Rao",m:"Inkollu",r:"Mandal President",mem:"2,100",mo:"9848-022-102"}],vw:[{n:"Kiran Loom",v:"Chirala Town",r:"Village President",b:"14 booths"},{n:"Padma Sri",v:"Santhanuthalapadu",r:"Booth Agent",b:"8 booths"},{n:"Naresh",v:"Vetapalem",r:"Village Convenor",b:"9 booths"},{n:"Sudha",v:"Inkollu",r:"Village President",b:"10 booths"}],wd:[3800,2800,2100]},
+      js:{nm:"Jana Sena",sc:"js",mla:"Alliance partner",mla_term:"2024–present",booths:235,members:3600,active:2400,v14:0,v19:0,v24:0,best:"2024 alliance",w24votes:"Alliance",strength:"Kapu community, Pawan Kalyan brand, youth",weakness:"Thin textile worker base",issues:[{ico:"👥",cl:"ia",t:"Kapu welfare scheme",d:"Balija & Kapu demanding dedicated welfare"},{ico:"👕",cl:"ig",t:"Weaver MSME support",d:"MSME credit guarantee for weavers pledged"}],mw:[{n:"Pavan Follower",m:"Chirala",r:"Mandal Convenor",mem:"1,200",mo:"9848-023-100"},{n:"Revathi",m:"Vetapalem",r:"Mandal Convenor",mem:"900",mo:"9848-023-101"},{n:"Siva Rao",m:"Inkollu",r:"Mandal Convenor",mem:"680",mo:"9848-023-102"}],vw:[{n:"Charan",v:"Chirala Town",r:"Village Convenor",b:"14 booths"},{n:"Divya",v:"Vetapalem",r:"Booth Coordinator",b:"9 booths"},{n:"Srinivas",v:"Inkollu",r:"Village President",b:"10 booths"}],wd:[1200,900,680]},
+    }
+  }
+};
+
+function getD(){return DB[document.getElementById("constSel").value]}
+
+function secHdr(icon,bg,title,sub=""){
+  return`<div class="sec-hdr"><div class="sec-hdr-icon" style="background:${bg}">${icon}</div><h2>${title}</h2>${sub?`<span>— ${sub}</span>`:""}</div>`;
+}
+
+/* ═══════════════════════════════════════
+   OVERVIEW — shows ALL sections at once
+═══════════════════════════════════════ */
+function renderOverview(d){
+  const isAll=(CP==="all");
+  const p=isAll?null:d.pd[CP];
+  const sc=CP;
+  const col=PC[CP];
+  const mn=d.mandals;
+
+  let html=``;
+
+  /* ── 1. CONSTITUENCY SNAPSHOT ── */
+  html+=secHdr("🗺️","#e0f2fe","Constituency Snapshot",d.name+" · No."+d.no+" · "+d.dist+" District");
+  html+=`<div class="kpi-row">
+    <div class="kpi c-cyan"><div class="lbl">Total Population</div><div class="val">${d.demo.pop}</div><div class="sub">Est. Census 2024</div></div>
+    <div class="kpi c-green"><div class="lbl">Registered Voters</div><div class="val">${d.demo.electors}</div><span class="delta up">▲ growing</span></div>
+    <div class="kpi c-cyan"><div class="lbl">Female Voters</div><div class="val">${d.demo.female}</div><span class="delta up">▲ vs 2019</span></div>
+    <div class="kpi c-cyan"><div class="lbl">Male Voters</div><div class="val">${d.demo.male}</div><span class="delta up">▲ vs 2019</span></div>
+    <div class="kpi c-amber"><div class="lbl">Children U-18</div><div class="val">${d.demo.u18}</div><div class="sub">~${d.demo.age[0]}% of pop.</div></div>
+    <div class="kpi c-green"><div class="lbl">Literacy Rate</div><div class="val">${d.demo.lit}%</div><span class="delta up">▲ improving</span></div>
+    <div class="kpi c-navy"><div class="lbl">Polling Booths</div><div class="val">${isAll?d.pd.tdp.booths:p.booths}</div></div>
+    <div class="kpi c-purple"><div class="lbl">2024 Turnout</div><div class="val">${d.elections[3].turn}%</div></div>
+  </div>`;
+
+  /* ── 2. CURRENT MLA / PARTY ── */
+  html+=secHdr("🏛️","#dcfce7","Current MLA & Party");
+  if(isAll){
+    html+=`<div class="cmp3">
+      ${["ycp","tdp","js"].map(s=>{const pp=d.pd[s];return`<div class="cc">
+        <div class="cl">${pp.nm}</div>
+        <div style="font-size:14px;font-weight:700;color:${PC[s]}">${pp.mla}</div>
+        <div class="cs">${pp.mla_term}</div>
+        <div style="margin-top:6px"><span class="delta ${pp.v24>pp.v19?'up':'dn'}">${pp.v24}% in 2024</span></div>
+      </div>`}).join("")}
+    </div>`;
+  } else {
+    html+=`<div class="card accent-g" style="margin-bottom:12px">
+      <div class="mla-wrap">
+        <div class="mla-av">${p.mla[0]}</div>
+        <div>
+          <div class="mla-name">${p.mla}</div>
+          <div class="mla-sub">${d.name} · No.${d.no} · ${d.dist} District · ${p.mla_term}</div>
+          <span class="pill p-${sc}">${p.nm}</span><span class="pill p-win">✓ ${p.mla_term.includes("2024")?"Current MLA":"Former MLA"}</span>
+          <div style="margin-top:8px;display:flex;gap:16px;flex-wrap:wrap">
+            <span style="font-size:12px;color:var(--txt2)">Members: <b style="color:${col}">${p.members.toLocaleString()}</b></span>
+            <span style="font-size:12px;color:var(--txt2)">Active: <b style="color:${col}">${p.active.toLocaleString()}</b></span>
+            <span style="font-size:12px;color:var(--txt2)">2024 Votes: <b style="color:${col}">${p.w24votes}</b></span>
+            <span style="font-size:12px;color:var(--txt2)">Best: <b style="color:${col}">${p.best}</b></span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  /* ── 3. DEMOGRAPHICS ── */
+  html+=secHdr("👥","#e0f2fe","Demographics & Population");
+  html+=`<div class="grid2" style="margin-bottom:0">
+    <div class="card accent-l">
+      <h3>Age Distribution</h3>
+      <div class="chart-wrap" style="height:160px"><canvas id="ov_age" role="img" aria-label="Age distribution"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Gender & Urban-Rural Split</h3>
+      <div style="display:flex;gap:10px;height:160px">
+        <div class="chart-wrap" style="flex:1"><canvas id="ov_gen" role="img" aria-label="Gender split"></canvas></div>
+        <div class="chart-wrap" style="flex:1"><canvas id="ov_urb" role="img" aria-label="Urban rural"></canvas></div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <h3>Caste Composition</h3>
+      <div class="caste-grid">${d.caste.map(c=>`<div class="caste-item"><span>${c.n}</span><span class="cp">${c.p}%</span></div>`).join("")}</div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <h3>Literacy Breakdown</h3>
+      <div class="pbar-row"><span class="pbar-lbl">Overall</span><div class="pbar-track"><div class="pbar-fill" style="width:${d.demo.lit}%;background:#0891b2"></div></div><span class="pbar-val">${d.demo.lit}%</span></div>
+      <div class="pbar-row"><span class="pbar-lbl">Urban</span><div class="pbar-track"><div class="pbar-fill" style="width:${Math.min(d.demo.lit+8,99)}%;background:#15803d"></div></div><span class="pbar-val">${d.demo.lit+8}%</span></div>
+      <div class="pbar-row"><span class="pbar-lbl">Rural</span><div class="pbar-track"><div class="pbar-fill" style="width:${d.demo.lit-7}%;background:#d97706"></div></div><span class="pbar-val">${d.demo.lit-7}%</span></div>
+      <div class="pbar-row"><span class="pbar-lbl">U-18 share</span><div class="pbar-track"><div class="pbar-fill" style="width:${d.demo.age[0]*2}%;background:#dc2626"></div></div><span class="pbar-val">~${d.demo.age[0]}%</span></div>
+    </div>
+  </div>`;
+
+  /* ── 4. ECONOMY & LIVELIHOOD ── */
+  html+=secHdr("🏭","#fef9c3","Economy & Livelihood");
+  html+=`<div class="grid2" style="margin-bottom:0">
+    <div class="card accent-a">
+      <h3>Occupation Breakdown</h3>
+      ${d.demo.occup.map((o,i)=>`<div class="pbar-row"><span class="pbar-lbl">${o}</span><div class="pbar-track"><div class="pbar-fill" style="width:${Math.min(d.demo.occupD[i]*3,100)}%;background:#d97706"></div></div><span class="pbar-val">${d.demo.occupD[i]}%</span></div>`).join("")}
+    </div>
+    <div class="card">
+      <h3>Livelihood Sectors</h3>
+      <div class="chart-wrap" style="height:180px"><canvas id="ov_sec" role="img" aria-label="Sectors"></canvas></div>
+    </div>
+    <div class="card full" style="margin-bottom:14px">
+      <h3>Business & Trade Profile</h3>
+      <p style="font-size:12px;color:var(--txt2);line-height:1.7">${d.biz}</p>
+    </div>
+  </div>`;
+
+  /* ── 5. PARTY WORKERS ── */
+  html+=secHdr("🗂️",isAll?"#f5f3ff":`${col}22`,"Party Workers",(isAll?"All Parties":p.nm)+" — Mandal & Village Level");
+  if(isAll){
+    html+=`<div class="grid3" style="margin-bottom:0">
+      ${["ycp","tdp","js"].map(s=>{const pp=d.pd[s];const c2=PC[s];return`<div class="card" style="border-left:3px solid ${c2}">
+        <h3 style="color:${c2}">${pp.nm} Network &nbsp;<span style="color:var(--txt3);font-weight:400">${pp.members.toLocaleString()} members</span></h3>
+        ${pp.mw.map(w=>`<div class="wcard"><div class="wav wav-${s}">${w.n[0]}</div><div><div style="font-size:11px;font-weight:600">${w.n}</div><div style="font-size:10px;color:var(--txt3)">${w.m} · <b style="color:${c2}">${w.mem}</b></div></div></div>`).join("")}
+      </div>`;}).join("")}
+    </div>
+    <div class="card full" style="margin-top:12px;margin-bottom:14px">
+      <h3>Member Strength Comparison</h3>
+      <div class="chart-wrap" style="height:180px"><canvas id="ov_wcmp" role="img" aria-label="Worker comparison"></canvas></div>
+    </div>`;
+  } else {
+    html+=`<div class="grid2" style="margin-bottom:0">
+      <div class="card" style="border-left:3px solid ${col}">
+        <h3 style="color:${col}">Mandal Level Presidents</h3>
+        ${p.mw.map(w=>`<div class="wcard"><div class="wav wav-${sc}">${w.n[0]}</div><div style="flex:1"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:3px"><span style="font-size:12px;font-weight:600">${w.n}</span><span class="wbadge wb1">${w.r}</span></div><div style="font-size:11px;color:var(--txt3)">${w.m} Mandal · <b style="color:${col}">${w.mem} members</b></div><div style="font-size:11px;color:var(--txt3)">📞 ${w.mo}</div></div></div>`).join("")}
+      </div>
+      <div class="card">
+        <h3>Member Strength by Mandal</h3>
+        <div class="chart-wrap" style="height:130px"><canvas id="ov_wbar" role="img" aria-label="Worker strength"></canvas></div>
+        <div style="margin-top:10px">${p.wd.map((v,i)=>`<div class="pbar-row"><span class="pbar-lbl">${mn[i]||""}</span><div class="pbar-track"><div class="pbar-fill" style="width:${Math.min(Math.round(v/50),100)}%;background:${col}"></div></div><span class="pbar-val">${v.toLocaleString()}</span></div>`).join("")}</div>
+      </div>
+      <div class="card full" style="margin-bottom:14px">
+        <h3 style="color:${col}">Village / Ward Level Leaders</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px">
+          ${p.vw.map(w=>`<div class="wcard"><div class="wav wav-${sc}" style="width:28px;height:28px;font-size:10px">${w.n[0]}</div><div style="flex:1"><div style="display:flex;justify-content:space-between;gap:4px;flex-wrap:wrap"><b style="font-size:11px">${w.n}</b><span class="wbadge ${w.r.includes("President")?"wb1":w.r.includes("Booth")?"wb3":"wb2"}">${w.r}</span></div><div style="font-size:11px;color:var(--txt3)">${w.v} · <b style="color:${col}">${w.b}</b></div></div></div>`).join("")}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  /* ── 6. ELECTION HISTORY ── */
+  html+=secHdr("📊","#dbeafe","Election Results 2009–2024");
+  html+=`<div class="grid2" style="margin-bottom:0">
+    <div class="card accent-l">
+      <h3>Result Summary</h3>
+      ${d.elections.map(e=>`<div class="erow"><span style="font-weight:700;color:var(--cyan);width:36px">${e.yr}</span><span style="flex:1;font-weight:500">${e.w}</span><span class="pill ${e.pc}">${e.p}</span><span style="color:var(--txt2)">${e.votes}</span><span style="color:var(--txt3);font-size:11px">Margin: ${e.margin}</span></div>`).join("")}
+    </div>
+    <div class="card">
+      <h3>Vote Share Trend</h3>
+      <div class="chart-wrap" style="height:180px"><canvas id="ov_vs" role="img" aria-label="Vote share trend"></canvas></div>
+    </div>
+  </div>`;
+
+  /* ── 7. KEY ISSUES ── */
+  html+=secHdr("⚠️","#fee2e2","Key Issues",isAll?"All Parties":(p.nm+" perspective"));
+  if(isAll){
+    html+=`<div class="grid3" style="margin-bottom:0">`+["ycp","tdp","js"].map(s=>{const pp=d.pd[s];const c2=PC[s];return`<div class="card" style="border-left:3px solid ${c2}"><h3 style="color:${c2}">${pp.nm} Issues</h3>${pp.issues.map(i=>`<div class="issue-item"><div class="iico ${i.cl}">${i.ico}</div><div><div class="issue-t">${i.t}</div><div class="issue-d">${i.d}</div></div></div>`).join("")}</div>`;}).join("")+`</div>`;
+  } else {
+    html+=`<div class="grid2" style="margin-bottom:0">
+      <div class="card" style="border-left:3px solid ${col}">
+        <h3 style="color:${col}">${p.nm} — Issues & Positions</h3>
+        ${p.issues.map(i=>`<div class="issue-item"><div class="iico ${i.cl}">${i.ico}</div><div><div class="issue-t">${i.t}</div><div class="issue-d">${i.d}</div></div></div>`).join("")}
+      </div>
+      <div class="card">
+        <h3>Strength vs Weakness</h3>
+        <div style="margin-bottom:10px"><div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:5px">✅ Strengths</div><p style="font-size:12px;color:var(--txt2);line-height:1.7">${p.strength}</p></div>
+        <div><div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:5px">⚠ Weaknesses</div><p style="font-size:12px;color:var(--txt2);line-height:1.7">${p.weakness}</p></div>
+      </div>
+    </div>`;
+  }
+
+  /* ── 8. DEVELOPMENT ── */
+  html+=secHdr("🚀","#dcfce7","Development — Last 5 Years & Upcoming Priorities");
+  html+=`<div class="grid2" style="margin-bottom:0">
+    <div class="card accent-g">
+      <h3>Last 5 Years — Key Works</h3>
+      ${d.dev.map(e=>`<div class="dev-item"><span class="dev-yr">${e.yr}</span><span class="dev-t">${e.t}</span></div>`).join("")}
+    </div>
+    <div class="card accent-a">
+      <h3>Upcoming Priorities</h3>
+      ${d.up.map((u,i)=>`<div class="dev-item"><span class="dev-yr" style="background:#fffbeb;color:var(--amber);border-color:#fde68a">${i+1}</span><span class="dev-t">${u}</span></div>`).join("")}
+    </div>
+  </div>`;
+
+  document.getElementById("ovContent").innerHTML=html;
+
+  /* ── RENDER CHARTS ── */
+  setTimeout(()=>{
+    // Age
+    dk("ov_age");
+    CHTS.ov_age=new Chart(document.getElementById("ov_age").getContext("2d"),{type:"bar",data:{labels:["0–17","18–35","36–50","51–65","65+"],datasets:[{data:d.demo.age,backgroundColor:["#fee2e2","#dbeafe","#dcfce7","#fef9c3","#e8edf2"],borderColor:["#dc2626","#1d4ed8","#15803d","#d97706","#8a9bb0"],borderWidth:1.5,borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+"%",color:"#8a9bb0",font:{size:10}},grid:{color:"#e8edf2"}},x:{ticks:{color:"#4a5568",font:{size:10}},grid:{display:false}}}}});
+    // Gender
+    dk("ov_gen");
+    CHTS.ov_gen=new Chart(document.getElementById("ov_gen").getContext("2d"),{type:"doughnut",data:{labels:["Male","Female"],datasets:[{data:[d.demo.gm,d.demo.gf],backgroundColor:["#dbeafe","#fce7f3"],borderColor:["#1d4ed8","#be185d"],borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{boxWidth:10,font:{size:10},color:"#4a5568"}}}}});
+    // Urban
+    dk("ov_urb");
+    CHTS.ov_urb=new Chart(document.getElementById("ov_urb").getContext("2d"),{type:"doughnut",data:{labels:["Urban","Rural"],datasets:[{data:[d.demo.urban,d.demo.rural],backgroundColor:["#e0f2fe","#dcfce7"],borderColor:["#0891b2","#15803d"],borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{boxWidth:10,font:{size:10},color:"#4a5568"}}}}});
+    // Sectors
+    dk("ov_sec");
+    CHTS.ov_sec=new Chart(document.getElementById("ov_sec").getContext("2d"),{type:"pie",data:{labels:d.demo.sectors,datasets:[{data:d.demo.sectorD,backgroundColor:["#dcfce7","#dbeafe","#fef9c3","#f5f3ff","#fee2e2"],borderColor:["#15803d","#1d4ed8","#d97706","#7c3aed","#dc2626"],borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{boxWidth:10,font:{size:10},color:"#4a5568"}}}}});
+    // Vote share
+    dk("ov_vs");
+    CHTS.ov_vs=new Chart(document.getElementById("ov_vs").getContext("2d"),{type:"line",data:{labels:["2009","2014","2019","2024"],datasets:[{label:"YSRCP",data:d.elections.map(e=>e.p==="YSRCP"?e.pct:null),borderColor:"#1d4ed8",backgroundColor:"transparent",tension:.3,pointRadius:4,spanGaps:true,borderWidth:2},{label:"TDP",data:d.elections.map(e=>e.p==="TDP"?e.pct:null),borderColor:"#f59e0b",backgroundColor:"transparent",tension:.3,pointRadius:4,spanGaps:true,borderWidth:2,borderDash:[5,3]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{boxWidth:10,font:{size:10},color:"#4a5568"}}},scales:{y:{min:0,max:75,ticks:{callback:v=>v+"%",color:"#8a9bb0",font:{size:10}},grid:{color:"#e8edf2"}},x:{ticks:{color:"#4a5568",font:{size:10}},grid:{display:false}}}}});
+    // Workers
+    if(!isAll && document.getElementById("ov_wbar")){
+      dk("ov_wbar");
+      CHTS.ov_wbar=new Chart(document.getElementById("ov_wbar").getContext("2d"),{type:"bar",data:{labels:d.mandals,datasets:[{data:p.wd,backgroundColor:col+"44",borderColor:col,borderWidth:1.5,borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:"y",plugins:{legend:{display:false}},scales:{x:{ticks:{color:"#8a9bb0",font:{size:10}},grid:{color:"#e8edf2"}},y:{ticks:{color:"#4a5568",font:{size:10}},grid:{display:false}}}}});
+    }
+    if(isAll && document.getElementById("ov_wcmp")){
+      dk("ov_wcmp");
+      const y=d.pd.ycp,t=d.pd.tdp,j=d.pd.js;
+      CHTS.ov_wcmp=new Chart(document.getElementById("ov_wcmp").getContext("2d"),{type:"bar",data:{labels:d.mandals,datasets:[{label:"YSRCP",data:y.wd,backgroundColor:"#1d4ed833",borderColor:"#1d4ed8",borderWidth:1.5,borderRadius:3},{label:"TDP",data:t.wd,backgroundColor:"#f59e0b33",borderColor:"#f59e0b",borderWidth:1.5,borderRadius:3},{label:"Jana Sena",data:j.wd,backgroundColor:"#f9731633",borderColor:"#f97316",borderWidth:1.5,borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{boxWidth:10,font:{size:10},color:"#4a5568"}}},scales:{y:{ticks:{color:"#8a9bb0",font:{size:10}},grid:{color:"#e8edf2"}},x:{ticks:{color:"#4a5568",font:{size:10}},grid:{display:false}}}}});
+    }
+  },50);
+}
+
+/* other tabs delegate to dedicated renders */
+function renderWorkers(d){
+  const p=d.pd[CP];const sc=CP==="all"?"ycp":CP;const col=PC[sc];
+  if(CP==="all"){
+    let h=`<div class="card full" style="margin-bottom:12px"><h3>All-Party Worker Strength</h3><div class="chart-wrap" style="height:200px"><canvas id="wk_cmp" role="img" aria-label="Worker comparison"></canvas></div></div><div class="grid3">`;
+    h+=["ycp","tdp","js"].map(s=>{const pp=d.pd[s];const c2=PC[s];return`<div class="card" style="border-left:3px solid ${c2}"><h3 style="color:${c2}">${pp.nm}</h3>${pp.mw.map(w=>`<div class="wcard"><div class="wav wav-${s}">${w.n[0]}</div><div><div style="font-size:11px;font-weight:600">${w.n}</div><div style="font-size:10px;color:var(--txt3)">${w.m} · <b style="color:${c2}">${w.mem}</b></div></div></div>`).join("")}</div>`;}).join("")+"</div>";
+    document.getElementById("wkContent").innerHTML=h;
+    setTimeout(()=>{dk("wk_cmp");const y=d.pd.ycp,t=d.pd.tdp,j=d.pd.js;CHTS.wk_cmp=new Chart(document.getElementById("wk_cmp").getContext("2d"),{type:"bar",data:{labels:d.mandals,datasets:[{label:"YSRCP",data:y.wd,backgroundColor:"#1d4ed833",borderColor:"#1d4ed8",borderWidth:1.5,borderRadius:4},{label:"TDP",data:t.wd,backgroundColor:"#f59e0b33",borderColor:"#f59e0b",borderWidth:1.5,borderRadius:4},{label:"Jana Sena",data:j.wd,backgroundColor:"#f9731633",borderColor:"#f97316",borderWidth:1.5,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{boxWidth:10,font:{size:10},color:"#4a5568"}}},scales:{y:{ticks:{color:"#8a9bb0"},grid:{color:"#e8edf2"}},x:{ticks:{color:"#4a5568"},grid:{display:false}}}}});},50);
+    return;
+  }
+  const pa=d.pd[CP];
+  document.getElementById("wkContent").innerHTML=`<div class="grid2">
+    <div class="card" style="border-left:3px solid ${col}"><h3 style="color:${col}">Mandal Presidents</h3>${pa.mw.map(w=>`<div class="wcard"><div class="wav wav-${CP}">${w.n[0]}</div><div style="flex:1"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:3px"><b style="font-size:12px">${w.n}</b><span class="wbadge wb1">${w.r}</span></div><div style="font-size:11px;color:var(--txt3)">${w.m} · <b style="color:${col}">${w.mem} members</b></div><div style="font-size:11px;color:var(--txt3)">📞 ${w.mo}</div></div></div>`).join("")}</div>
+    <div class="card"><h3>Strength by Mandal</h3><div class="chart-wrap" style="height:140px"><canvas id="wk_bar" role="img" aria-label="Worker strength"></canvas></div><div style="margin-top:10px">${pa.wd.map((v,i)=>`<div class="pbar-row"><span class="pbar-lbl">${d.mandals[i]||""}</span><div class="pbar-track"><div class="pbar-fill" style="width:${Math.min(Math.round(v/50),100)}%;background:${col}"></div></div><span class="pbar-val">${v.toLocaleString()}</span></div>`).join("")}</div></div>
+    <div class="card full"><h3 style="color:${col}">Village / Ward Level Leaders</h3><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px">${pa.vw.map(w=>`<div class="wcard"><div class="wav wav-${CP}" style="width:28px;height:28px;font-size:10px">${w.n[0]}</div><div style="flex:1"><div style="display:flex;justify-content:space-between;gap:4px;flex-wrap:wrap"><b style="font-size:11px">${w.n}</b><span class="wbadge ${w.r.includes("President")?"wb1":w.r.includes("Booth")?"wb3":"wb2"}">${w.r}</span></div><div style="font-size:11px;color:var(--txt3)">${w.v} · <b style="color:${col}">${w.b}</b></div></div></div>`).join("")}</div></div>
+  </div>`;
+  setTimeout(()=>{dk("wk_bar");CHTS.wk_bar=new Chart(document.getElementById("wk_bar").getContext("2d"),{type:"bar",data:{labels:d.mandals,datasets:[{data:pa.wd,backgroundColor:col+"44",borderColor:col,borderWidth:1.5,borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:"y",plugins:{legend:{display:false}},scales:{x:{ticks:{color:"#8a9bb0",font:{size:10}},grid:{color:"#e8edf2"}},y:{ticks:{color:"#4a5568",font:{size:10}},grid:{display:false}}}}});},50);
+}
+function renderElection(d){
+  document.getElementById("elContent").innerHTML=`<div class="grid2"><div class="card accent-l"><h3>Results 2009–2024</h3>${d.elections.map(e=>`<div class="erow"><span style="font-weight:700;color:var(--cyan);width:36px">${e.yr}</span><span style="flex:1;font-weight:500">${e.w}</span><span class="pill ${e.pc}">${e.p}</span><span style="color:var(--txt2)">${e.votes} (${e.pct}%)</span><span style="color:var(--txt3);font-size:11px">Margin: ${e.margin}</span><span style="color:var(--txt3);font-size:11px">Turn: ${e.turn}%</span></div>`).join("")}</div><div class="card"><h3>Vote Share Trend</h3><div class="chart-wrap" style="height:200px"><canvas id="el_vs" role="img" aria-label="Vote trend"></canvas></div></div></div>`;
+  setTimeout(()=>{dk("el_vs");CHTS.el_vs=new Chart(document.getElementById("el_vs").getContext("2d"),{type:"line",data:{labels:["2009","2014","2019","2024"],datasets:[{label:"YSRCP",data:d.elections.map(e=>e.p==="YSRCP"?e.pct:null),borderColor:"#1d4ed8",backgroundColor:"transparent",tension:.3,pointRadius:4,spanGaps:true,borderWidth:2},{label:"TDP",data:d.elections.map(e=>e.p==="TDP"?e.pct:null),borderColor:"#f59e0b",backgroundColor:"transparent",tension:.3,pointRadius:4,spanGaps:true,borderWidth:2,borderDash:[5,3]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{boxWidth:10,font:{size:10},color:"#4a5568"}}},scales:{y:{min:0,max:75,ticks:{callback:v=>v+"%",color:"#8a9bb0"},grid:{color:"#e8edf2"}},x:{ticks:{color:"#4a5568"},grid:{display:false}}}}});},50);
+}
+function renderDemo(d){
+  document.getElementById("dmContent").innerHTML=`<div class="kpi-row"><div class="kpi c-cyan"><div class="lbl">Population</div><div class="val">${d.demo.pop}</div></div><div class="kpi c-green"><div class="lbl">Total Voters</div><div class="val">${d.demo.electors}</div></div><div class="kpi c-cyan"><div class="lbl">Female Voters</div><div class="val">${d.demo.female}</div></div><div class="kpi c-cyan"><div class="lbl">Male Voters</div><div class="val">${d.demo.male}</div></div><div class="kpi c-amber"><div class="lbl">Children U-18</div><div class="val">${d.demo.u18}</div></div><div class="kpi c-green"><div class="lbl">Literacy</div><div class="val">${d.demo.lit}%</div></div></div><div class="grid2"><div class="card"><h3>Age Distribution</h3><div class="chart-wrap" style="height:180px"><canvas id="dm_age" role="img" aria-label="Age"></canvas></div></div><div class="card"><h3>Urban vs Rural</h3><div class="chart-wrap" style="height:180px"><canvas id="dm_urb" role="img" aria-label="Urban rural"></canvas></div></div><div class="card"><h3>Caste Composition</h3><div class="caste-grid">${d.caste.map(c=>`<div class="caste-item"><span>${c.n}</span><span class="cp">${c.p}%</span></div>`).join("")}</div></div><div class="card"><h3>Literacy Breakdown</h3><div class="pbar-row"><span class="pbar-lbl">Overall</span><div class="pbar-track"><div class="pbar-fill" style="width:${d.demo.lit}%;background:#0891b2"></div></div><span class="pbar-val">${d.demo.lit}%</span></div><div class="pbar-row"><span class="pbar-lbl">Urban</span><div class="pbar-track"><div class="pbar-fill" style="width:${Math.min(d.demo.lit+8,99)}%;background:#15803d"></div></div><span class="pbar-val">${d.demo.lit+8}%</span></div><div class="pbar-row"><span class="pbar-lbl">Rural</span><div class="pbar-track"><div class="pbar-fill" style="width:${d.demo.lit-7}%;background:#d97706"></div></div><span class="pbar-val">${d.demo.lit-7}%</span></div></div><div class="card full"><h3>Electorate Growth</h3><div class="chart-wrap" style="height:160px"><canvas id="dm_eg" role="img" aria-label="Electorate growth"></canvas></div></div></div>`;
+  setTimeout(()=>{
+    dk("dm_age");CHTS.dm_age=new Chart(document.getElementById("dm_age").getContext("2d"),{type:"bar",data:{labels:["0–17","18–35","36–50","51–65","65+"],datasets:[{data:d.demo.age,backgroundColor:["#fee2e2","#dbeafe","#dcfce7","#fef9c3","#e8edf2"],borderColor:["#dc2626","#1d4ed8","#15803d","#d97706","#8a9bb0"],borderWidth:1.5,borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+"%",color:"#8a9bb0"},grid:{color:"#e8edf2"}},x:{ticks:{color:"#4a5568"},grid:{display:false}}}}});
+    dk("dm_urb");CHTS.dm_urb=new Chart(document.getElementById("dm_urb").getContext("2d"),{type:"doughnut",data:{labels:["Urban","Rural"],datasets:[{data:[d.demo.urban,d.demo.rural],backgroundColor:["#e0f2fe","#dcfce7"],borderColor:["#0891b2","#15803d"],borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{boxWidth:10,font:{size:10},color:"#4a5568"}}}}});
+    dk("dm_eg");CHTS.dm_eg=new Chart(document.getElementById("dm_eg").getContext("2d"),{type:"bar",data:{labels:["2009","2014","2019","2024"],datasets:[{label:"Electors",data:d.demo.elG,backgroundColor:["#e0f2fe","#bae6fd","#7dd3fc","#0891b2"],borderColor:"#0891b2",borderWidth:1,borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>(v/100000).toFixed(1)+"L",color:"#8a9bb0"},grid:{color:"#e8edf2"}},x:{ticks:{color:"#4a5568"},grid:{display:false}}}}});
+  },50);
+}
+function renderEcon(d){
+  document.getElementById("ecContent").innerHTML=`<div class="grid2"><div class="card accent-a"><h3>Occupation Breakdown</h3>${d.demo.occup.map((o,i)=>`<div class="pbar-row"><span class="pbar-lbl">${o}</span><div class="pbar-track"><div class="pbar-fill" style="width:${Math.min(d.demo.occupD[i]*3,100)}%;background:#d97706"></div></div><span class="pbar-val">${d.demo.occupD[i]}%</span></div>`).join("")}</div><div class="card"><h3>Livelihood Sectors</h3><div class="chart-wrap" style="height:200px"><canvas id="ec_sec" role="img" aria-label="Sectors"></canvas></div></div><div class="card full"><h3>Business Profile</h3><p style="font-size:12px;color:var(--txt2);line-height:1.7">${d.biz}</p></div></div>`;
+  setTimeout(()=>{dk("ec_sec");CHTS.ec_sec=new Chart(document.getElementById("ec_sec").getContext("2d"),{type:"pie",data:{labels:d.demo.sectors,datasets:[{data:d.demo.sectorD,backgroundColor:["#dcfce7","#dbeafe","#fef9c3","#f5f3ff","#fee2e2"],borderColor:["#15803d","#1d4ed8","#d97706","#7c3aed","#dc2626"],borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{boxWidth:10,font:{size:10},color:"#4a5568"}}}}});},50);
+}
+function renderIssues(d){
+  if(CP==="all"){document.getElementById("isContent").innerHTML=`<div class="grid3">`+["ycp","tdp","js"].map(s=>{const pp=d.pd[s];const c2=PC[s];return`<div class="card" style="border-left:3px solid ${c2}"><h3 style="color:${c2}">${pp.nm} Issues</h3>${pp.issues.map(i=>`<div class="issue-item"><div class="iico ${i.cl}">${i.ico}</div><div><div class="issue-t">${i.t}</div><div class="issue-d">${i.d}</div></div></div>`).join("")}</div>`;}).join("")+`</div>`;return;}
+  const p=d.pd[CP];const col=PC[CP];
+  document.getElementById("isContent").innerHTML=`<div class="card" style="border-left:3px solid ${col};margin-bottom:12px"><h3 style="color:${col}">${p.nm} — Issues</h3>${p.issues.map(i=>`<div class="issue-item"><div class="iico ${i.cl}">${i.ico}</div><div><div class="issue-t">${i.t}</div><div class="issue-d">${i.d}</div></div></div>`).join("")}</div>`;
+}
+function renderDev(d){
+  document.getElementById("dvContent").innerHTML=`<div class="grid2"><div class="card accent-g"><h3>Last 5 Years</h3>${d.dev.map(e=>`<div class="dev-item"><span class="dev-yr">${e.yr}</span><span class="dev-t">${e.t}</span></div>`).join("")}</div><div class="card accent-a"><h3>Upcoming Priorities</h3>${d.up.map((u,i)=>`<div class="dev-item"><span class="dev-yr" style="background:#fffbeb;color:var(--amber);border-color:#fde68a">${i+1}</span><span class="dev-t">${u}</span></div>`).join("")}</div></div>`;
+}
+
+function render(){
+  const d=getD();
+  const di=document.getElementById("distSel");
+  document.getElementById("bcD").textContent=di.options[di.selectedIndex].text;
+  document.getElementById("bcC").textContent=d.name;
+  dkAll();
+  renderOverview(d);renderWorkers(d);renderElection(d);renderDemo(d);renderEcon(d);renderIssues(d);renderDev(d);
+}
+
+function switchParty(p,btn){
+  CP=p;
+  document.querySelectorAll(".party-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  render();
+}
+
+function showTab(name,btn){
+  ["overview","workers","election","demo","economy","issues","dev"].forEach(t=>{document.getElementById("tab-"+t).style.display=t===name?"block":"none";});
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+function onDist(){
+  const dist=document.getElementById("distSel").value;
+  const cs=document.getElementById("constSel");cs.innerHTML="";
+  const map={guntur:["mangalagiri"],bapatla:["bapatla","chirala"]};
+  const names={mangalagiri:"Mangalagiri",bapatla:"Bapatla",chirala:"Chirala"};
+  (map[dist]||[]).forEach(k=>{const o=document.createElement("option");o.value=k;o.textContent=names[k];cs.appendChild(o)});
+  onConst();
+}
+function onConst(){
+  const k=document.getElementById("constSel").value;const d=DB[k];if(!d)return;
+  const ms=document.getElementById("mandalSel");ms.innerHTML="<option value=''>All Mandals</option>";
+  d.mandals.forEach(m=>{const o=document.createElement("option");o.value=m;o.textContent=m;ms.appendChild(o)});onMandal();
+}
+function onMandal(){
+  const k=document.getElementById("constSel").value;const m=document.getElementById("mandalSel").value;const d=DB[k];if(!d)return;
+  const vs=document.getElementById("villageSel");vs.innerHTML="<option value=''>All Villages</option>";
+  if(m&&d.villages[m]){d.villages[m].forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;vs.appendChild(o)})}
+  render();
+}
+onDist();
+</script>
